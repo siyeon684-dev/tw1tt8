@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - ABOUT</title>
+    
+    <!-- 폰트 로드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-red: #d90429;
+            --text-main: #e0e0e0;
+            --text-sub: #888888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 배경 (Unicorn Studio) */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* 네비게이션 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem 3rem;
+            align-items: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+        .nav-links a { color: var(--text-main); text-decoration: none; margin-right: 2rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-red); }
+
+        /* 공통 컨테이너 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 상단 타이틀 */
+        .header-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            line-height: 0.9;
+            margin-top: 2rem;
+        }
+        .header-title span { color: var(--accent-red); }
+
+        /* 벤토 그리드 */
+        .bento-intro {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .b-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+        .b-large { grid-column: span 2; background: linear-gradient(45deg, #111, #222); }
+        
+        /* 뮤직 섹션 */
+        .music-section-wrapper {
+            margin: 0 auto 4rem auto;
+            border: 1px solid var(--card-border);
+            background: rgba(0,0,0,0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .music-header {
+            padding: 10px 20px;
+            background: #1a1a1a;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--accent-red);
+        }
+
+        .music-player-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 35%; 
+            max-height: 300px; 
+            min-height: 200px;
+            background: #000;
+        }
+
+        .music-player-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            opacity: 0.8;
+            filter: contrast(1.1) grayscale(0.2);
+        }
+        
+        .scanlines {
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                rgba(0,0,0,0.3) 3px,
+                rgba(0,0,0,0.3) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Marquee */
+        .marquee-section {
+            width: 100%;
+            background: var(--accent-red);
+            color: #000;
+            padding: 0.3rem 0;
+            margin: 4rem 0;
+            transform: rotate(-2deg) scale(1.02);
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+        }
+        
+        .marquee-content span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding-right: 3rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        
+        .marquee-content span::after {
+            content: "✦";
+            margin-left: 3rem;
+            font-size: 0.8rem;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 티켓 프로젝트 리스트 */
+        .projects-wrapper {
+            max-width: 1000px;
+            margin: 0 auto 6rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .section-label {
+            font-family: 'Cinzel', serif;
+            color: var(--text-sub);
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .ticket-card {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #111;
+            /* 모서리 파내기 */
+            --r: 20px;
+            mask: 
+                radial-gradient(var(--r) at 0 0, #0000 98%, #000) 0 0,
+                radial-gradient(var(--r) at 100% 0, #0000 98%, #000) 100% 0,
+                radial-gradient(var(--r) at 0 100%, #0000 98%, #000) 0 100%,
+                radial-gradient(var(--r) at 100% 100%, #0000 98%, #000) 100% 100%;
+            mask-size: 51% 51%;
+            mask-repeat: no-repeat;
+            
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .ticket-card:hover { transform: scale(1.02); }
+
+        .ticket-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            /* 필터 제거 요청시 아래 filter 줄 삭제 */
+            filter: grayscale(100%) brightness(0.4); 
+            transition: filter 0.5s ease, transform 0.5s ease;
+            z-index: 0;
+        }
+
+        .ticket-card:hover .ticket-bg {
+            filter: grayscale(0%) brightness(0.9);
+            transform: scale(1.05);
+        }
+
+        .ticket-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .t-left h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: #fff;
+            mix-blend-mode: exclusion;
+        }
+
+        .t-left h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+        
+        .t-left p {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 2px;
+            color: var(--accent-red);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 8px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .barcode {
+            width: 30px;
+            height: 80px;
+            background: repeating-linear-gradient(to bottom, #fff 0px, #fff 2px, transparent 2px, transparent 4px);
+            opacity: 0.7;
+        }
+
+        .t-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .project-num {
+            font-family: 'Oswald', sans-serif;
+            border: 1px solid white;
+            padding: 3px 12px;
+            border-radius: 15px;
+        }
+
+        /* --- [NEW] 3x3 Grid Gallery --- */
+        .gallery-container {
+            max-width: 1000px;
+            margin: 0 auto 8rem auto;
+            padding: 0 2rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #222;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            filter: grayscale(80%);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .bento-intro { grid-template-columns: 1fr; }
+            .b-large { grid-column: span 1; }
+            .ticket-content { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .t-left h2 { font-size: 3rem; }
+            .t-left h3 { font-size: 1.5rem; }
+            .t-meta { flex-direction: row; width: 100%; justify-content: space-between; }
+            .barcode { width: 100%; height: 30px; background: repeating-linear-gradient(to right, #fff 0px, #fff 2px, transparent 2px, transparent 4px); }
+            
+            .music-player-container { padding-bottom: 56.25%; max-height: none;}
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 배경 효과 -->
+    <div id="bg-canvas" data-us-project="2exsHOlzk533kpC6Dh52"></div>
+
+    <nav>
+        <div class="logo" style="font-weight:bold; font-size:1.2rem;">一切唯心造</div>
+        <div class="nav-links">
+            <a href="#">-</a>
+            <a href="#">-</a>
+            <a href="#">-</a>
+        </div>
+    </nav>
+
+    <!-- 상단: 인트로 -->
+    <div class="container">
+        <h1 class="header-title"> 2025  <span>Taste</span>  Archive</h1>
+        
+        <div class="bento-intro">
+            <!-- 프로필 -->
+            <div class="b-card">
+                <i class="fas fa-user-astronaut" style="font-size: 2rem; color: var(--accent-red);"></i>
+                <div>
+                    <h3 style="margin-bottom:5px;">동근혁</h3>
+                    <p style="font-size:0.8rem; color:#888;">인토/옹팔/망년 <br> T: @tw1tt8<br>M: shawn0303@naver.com</p>
+                </div>
+            </div>
+            <!-- 날씨/무드 -->
+            <div class="b-card b-large">
+                <span style="color:var(--accent-red);">자기소개</span>
+                <div style="display:flex; justify-content:space-between;">
+                    <span></span>
+                </div>
+                    <p style="font-size:0.8rem; color:#888; text-align: center;"> GL=HL=BL <br> 게임: 사이버펑크2077, DJMAX 등 <br> 영화: 친절한금자씨, 파과, 드레스메이커, 쿵푸판다, 캐리비안의 해적 등... <br>애니: 헌터×헌터 </p>
+            </div>
+            <!-- 스탯 -->
+            <div class="b-card"style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="color:var(--accent-red);">주의사항</span>
+                    <p style="font-size:0.8rem; color:#888;"> - </p>
+            </div>
+        </div>
+
+        <!-- [NEW] 뮤직 플레이어 섹션 (YouTube 링크 삽입됨) -->
+        <div class="music-section-wrapper">
+            <div class="music-header">
+                <span><i class="fas fa-compact-disc fa-spin"></i> MUSIC</span>
+                <span>REC ●</span>
+            </div>
+            <div class="music-player-container">
+                <!-- 
+                    YouTube Embed Code 
+                    감성적인 플레이리스트로 설정했습니다. 다른 영상을 원하시면 
+                    'embed/' 뒤의 코드를 변경하세요.
+                -->
+                <iframe 
+                src="https://www.youtube-nocookie.com/embed/2-xPNdkRJvk?si=Et9bL-kw4J4bq16K" 
+                title="YouTube video player" 
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+                </iframe>
+                <!-- 스캔라인 효과 (장식) -->
+                <div class="scanlines"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- [UPDATE] Marquee (얇은 버전) -->
+    <div class="marquee-section">
+        <div class="marquee-content">
+            <span>171031:: YUII♥YUTA</span>
+            <span>200514:: MARCUS♥ALVLIN</span>
+            <span>200229(240229):: JANE♥WENDY </span>
+            <span>220818:: HYUNHO♥JEONG </span>
+             <span>171031:: YUII♥YUTA</span>
+            <span>200514:: MARCUS♥ALVLIN</span>
+            <span>200229(240229):: JANE♥WENDY </span>
+            <span>220818:: HYUNHO♥JEONG </span>
+        </div>
+    </div>
+
+    <!-- 하단: 티켓 프로젝트 리스트 (이미지 매칭) -->
+    <div class="projects-wrapper">
+        <p class="section-label">RELATIONSHIPS </p>
+
+        <!-- Project 01: 유우이 & 유타 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img1.jpg');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>171031</p>
+                    <p>love</p>
+                    <h3>사쿠라이 유우이♥시라이시 유타 </h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">01</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 02: 제인 & 웬디 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img2.png');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>200229(240229)</p>
+                    <p>crush&love</p>
+                    <h3>제인 스완♥웬디 R. 오웬</h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">02</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 03: 마커스 & 앨빈 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img3.png');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>200514</p>
+                    <p>love</p>
+                    <h3>마커스 와그너♥앨빈 체이스</h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">03</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 04: 주연 vs 우원 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img4.png');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>211205</p>
+                    <p>hate</p>
+                    <h3>류주연vs. 우주원</h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">04</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 05: 현호 & 류정 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img5.png');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>220818</p>
+                    <p>love</p>
+                    <h3>박현호♥류정</h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">05</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 06: 지혜 & 하윤 -->
+        <div class="ticket-card">
+            <div class="ticket-bg" style="background-image: url('img6.png');"></div>
+            <div class="ticket-content">
+                <div class="t-left">
+                    <p>220818(maybe...) </p>
+                    <p>love</p>
+                    <h3>백지혜♥이하윤 </h3>
+                </div>
+                <div class="t-meta">
+                    <span class="project-num">06</span>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [NEW] 3x3 Grid Portfolio Section -->
+    <div class="gallery-container">
+        <p class="section-label">SNAPSHOTS</p>
+        <div class="gallery-grid">
+            <!-- Gallery Item 1 -->
+            <div class="gallery-item">
+                <img src="img1.jpg" alt="Gallery Image 1">
+                <div class="gallery-caption">Winter Memories</div>
+            </div>
+            <!-- Gallery Item 2 -->
+            <div class="gallery-item">
+                <img src="img2.jpg" alt="Gallery Image 2">
+                <div class="gallery-caption">Spring Breeze</div>
+            </div>
+            <!-- Gallery Item 3 -->
+            <div class="gallery-item">
+                <img src="img3.jpg" alt="Gallery Image 3">
+                <div class="gallery-caption">Industrial Vibe</div>
+            </div>
+            <!-- Gallery Item 4 -->
+            <div class="gallery-item">
+                <img src="img4.jpg" alt="Gallery Image 4">
+                <div class="gallery-caption">Silent Night</div>
+            </div>
+            <!-- Gallery Item 5 -->
+            <div class="gallery-item">
+                <img src="img5.jpg" alt="Gallery Image 5">
+                <div class="gallery-caption">Pray for you</div>
+            </div>
+            <!-- Gallery Item 6 -->
+            <div class="gallery-item">
+                <img src="img6.jpg" alt="Gallery Image 6">
+                <div class="gallery-caption">Darkness</div>
+            </div>
+            <!-- Gallery Item 7 (Placeholder - 추가 이미지가 있다면 변경) -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop" alt="Gallery Image 7">
+                <div class="gallery-caption">Artwork #07</div>
+            </div>
+            <!-- Gallery Item 8 -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1620641788427-b9f4dbf37639?q=80&w=1000&auto=format&fit=crop" alt="Gallery Image 8">
+                <div class="gallery-caption">Artwork #08</div>
+            </div>
+            <!-- Gallery Item 9 -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000&auto=format&fit=crop" alt="Gallery Image 9">
+                <div class="gallery-caption">Artwork #09</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align:center; padding: 2rem; color: #555; font-size: 0.8rem;">
+        &copy; 2024 THE CREATOR. All Rights Reserved.
+    </footer>
+
+    <!-- Unicorn Studio Script -->
+    <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.5.2/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+    </script>
+</body>
+</html>
