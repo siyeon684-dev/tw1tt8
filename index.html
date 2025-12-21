@@ -215,7 +215,28 @@
         &copy; 2025 THE CREATOR. All Rights Reserved.
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/webgl-fluid-enhanced@latest/dist/webgl-fluid-enhanced.min.js"></script>
-<script src="script.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<script>
+    VANTA.NET({
+        el: "body",                 // 효과를 적용할 요소 (body 전체)
+        mouseControls: true,        // 마우스 상호작용 켜기
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        
+        // --- [사이버펑크 컬러 설정] ---
+        color: 0xd90429,            // 포인트 색상 (님의 테마 레드: #d90429)
+        backgroundColor: 0x050505,  // 배경 색상 (아주 어두운 검정)
+        points: 12.00,              // 점의 개수 (많을수록 복잡해짐)
+        maxDistance: 22.00,         // 선이 연결되는 거리
+        spacing: 18.00,             // 간격
+        showDots: true              // 점 보이기
+    })
+</script>
 </body>
 </html>
