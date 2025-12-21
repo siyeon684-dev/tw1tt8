@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 01 - Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --accent-red: #d90429;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden; /* 스크롤 없애기 (필요시 auto로 변경) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 배경 그래픽 (붉은 사선) */
+        .bg-graphic-red {
+            position: absolute;
+            top: 0; right: 0;
+            width: 60%;
+            height: 100%;
+            background: var(--accent-red);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: -1;
+        }
+
+        /* 배경 거대 텍스트 */
+        .bg-text-huge {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Oswald', sans-serif;
+            font-size: 15vw;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 뒤로가기 버튼 */
+        .back-btn {
+            position: absolute;
+            top: 3rem; left: 3rem; /* 왼쪽 상단 배치 */
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 10px 20px;
+            font-family: 'Oswald', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 100;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .back-btn:hover { background: #fff; color: #000; }
+
+        /* 메인 레이아웃 */
+        .char-container {
+            width: 90%;
+            max-width: 1600px;
+            height: 80vh;
+            display: flex;
+        }
+
+        /* 왼쪽: 정보 영역 */
+        .char-info-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 50px;
+        }
+
+        .main-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 5rem;
+            line-height: 1;
+            text-transform: uppercase;
+            margin: 10px 0 20px 0;
+            text-shadow: 2px 2px 0px var(--accent-red);
+        }
+
+        .sub-label {
+            font-family: 'Inter', sans-serif;
+            color: var(--accent-red);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .relation-tag {
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            background: rgba(0,0,0,0.3);
+            width: fit-content;
+        }
+
+        .story-section {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 30px;
+        }
+
+        .vertical-title {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+        }
+
+        .story-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            max-width: 500px;
+        }
+
+        /* 오른쪽: 이미지 영역 */
+        .char-visual-col {
+            flex: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .char-visual-col img {
+            max-height: 90vh;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .bg-graphic-red { width: 100%; height: 40%; top: auto; bottom: 0; clip-path: none; border-top: 2px solid #fff;}
+            .char-container { flex-direction: column-reverse; height: auto; padding-bottom: 50px; }
+            .main-name { font-size: 3rem; }
+            .vertical-title { display: none; }
+            .char-visual-col img { max-height: 50vh; }
+            body { overflow: auto; display: block; padding-top: 80px;} /* 모바일 스크롤 허용 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-graphic-red"></div>
+    <div class="bg-text-huge">ARCHIVE</div>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> BACK
+    </a>
+
+    <div class="char-container">
+        <div class="char-info-col">
+            <div>
+                <p class="sub-label">171031</p>
+                <h1 class="main-name">YUII<br>YUTA</h1>
+                <p class="relation-tag">LOVE / COMPLICATED</p>
+            </div>
+            
+            <div class="story-section">
+                <div class="vertical-title">HISTORY</div>
+                <div class="story-text">
+                    <p>
+                        "우리는 서로의 구원이자 파멸이었다."
+                    </p>
+                    <br>
+                    <p>
+                        이곳에 사쿠라이 유우이와 시라이시 유타의 자세한 이야기를 적으시면 됩니다. 
+                        HTML 파일을 복사해서 쓰기 때문에, 페이지마다 다른 내용을 
+                        마음껏 길게 작성하실 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="char-visual-col">
+            <img src="img1.jpg" alt="Character Visual">
+        </div>
+    </div>
+
+</body>
+</html>
