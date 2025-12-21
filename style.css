@@ -1,7 +1,7 @@
 /* === [기본 스타일 & 변수] === */
 :root {
-    --bg-dark: #050505;
-    --card-bg: rgba(20, 20, 20, 0.6);
+    --bg-dark: #000000; /* 완전한 블랙 */
+    --card-bg: rgba(20, 20, 20, 0.4); /* 배경이 보이도록 투명도 조절 */
     --card-border: rgba(255, 255, 255, 0.1);
     --accent-red: #d90429;
     --text-main: #e0e0e0;
@@ -18,14 +18,15 @@ body {
     min-height: 100vh;
 }
 
-/* 배경 (Unicorn Studio) */
-#bg-canvas {
+/* [NEW] 유체 시뮬레이션 배경 캔버스 */
+#fluid-canvas {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: -1;
-    opacity: 0.5;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* 콘텐츠 뒤로 보내기 */
+    pointer-events: auto; /* 마우스 반응을 위해 이벤트 허용 */
 }
 
 /* 네비게이션 */
@@ -57,6 +58,7 @@ nav {
     margin-bottom: 2rem;
     line-height: 0.9;
     margin-top: 2rem;
+    pointer-events: none; /* 배경 클릭 방해 방지 */
 }
 .header-title span { color: var(--accent-red); }
 
@@ -72,13 +74,13 @@ nav {
     border: 1px solid var(--card-border);
     border-radius: 15px;
     padding: 1.5rem;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(2px); /* 배경 흐림 효과 살짝 줄임 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 200px;
 }
-.b-large { grid-column: span 2; background: linear-gradient(45deg, #111, #222); }
+.b-large { grid-column: span 2; background: linear-gradient(45deg, rgba(17,17,17,0.8), rgba(34,34,34,0.8)); }
 
 /* 뮤직 섹션 */
 .music-section-wrapper {
@@ -321,26 +323,6 @@ nav {
 .gallery-item:hover .gallery-caption {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* [NEW] 검은 꽃잎 효과 */
-.petal {
-    position: fixed;
-    top: -10vh;
-    z-index: 9999;
-    /* 검은색 그라데이션 */
-    background: linear-gradient(120deg, #1a1a1a, #000000); 
-    /* 어두운 배경에서 보이도록 얇은 테두리 추가 */
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    opacity: 0.8;
-    border-radius: 150% 0 150% 0;
-    pointer-events: none;
-    animation: fall linear infinite;
-}
-@keyframes fall {
-    0% { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
-    10% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(110vh) rotate(360deg) translateX(50px); }
 }
 
 /* 반응형 */
